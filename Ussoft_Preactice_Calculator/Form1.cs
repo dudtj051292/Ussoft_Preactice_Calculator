@@ -206,7 +206,10 @@ namespace Ussoft_Preactice_Calculator
         private void button_equal_Click(object sender, EventArgs e)
         {
             double result = 0;
-            while (isAllNumber(textBox1.Text))
+            int count = isAllNumber(textBox1.Text);
+            MessageBox.Show("count :"+ count);
+
+            for (int i =0; i < count; i++)
             {
                 if (textBox1.Text.Contains("²"))
                 {
@@ -246,8 +249,24 @@ namespace Ussoft_Preactice_Calculator
             }
                        
         }
+        private int isAllNumber(String s)
+        {
+            int num = 0;
+            char[] carr = s.ToCharArray();
+            foreach(char c in carr)
+            {
+                if(!('0' <= c && '9' >= c|| c == '.'))
+                {
+                    num++;
+                }
+            }
+
+            return num;
+        }
+        
         private string returnPrev(String str, String chk)
         {
+            MessageBox.Show(str);
             string temp = str.Substring(0, str.IndexOf(chk));
             char[] c = temp.ToCharArray();
             string a = "";
@@ -300,15 +319,7 @@ namespace Ussoft_Preactice_Calculator
         }
 
 
-        private bool isAllNumber(String s)
-        {
-            Boolean isc = false;
-
-            if (s.Contains("+") || s.Contains("-") ||
-                s.Contains("/") || s.Contains("*") || s.Contains("²") ) isc = true;
-
-            return isc;
-        }
+      
 
         private double calculator(double a, double b , int i)
         {
