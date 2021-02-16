@@ -15,32 +15,31 @@ namespace Ussoft_Preactice_Calculator
         public Form1()
         {
             InitializeComponent();
-            //drawAnim();
+            drawAnim();
         }
+
 
        private void drawAnim()
         {
+
+            
             Point startpoint = new Point(0, panel1.Height / 2);
             int rad = panel1.Height / 8;
             double deg = 0.0;
             int cen = 10;
-            while (true)
-            {
-                Graphics g = panel1.CreateGraphics();
+            
+            Graphics g = panel1.CreateGraphics();
 
-                g.Clear(panel1.BackColor);
-                System.Threading.Thread.Sleep(300);
-                int nx = (int)Math.Cos(deg) + rad + cen;
-                int ny = (int)Math.Sin(deg) + rad + cen;
-                Rectangle rect = new Rectangle(nx, ny, 20, 20);
-                deg++;
-                cen++;
-                g.FillRectangle(Brushes.Red, rect);
-                g.Dispose();
-                if (cen > panel1.Width) goto EXIT;
-            }
-        EXIT:
-            { }
+            g.Clear(panel1.BackColor);
+            System.Threading.Thread.Sleep(300);
+            int nx = (int)Math.Cos(deg) + rad + cen;
+            int ny = (int)Math.Sin(deg) + rad + cen;
+            Rectangle rect = new Rectangle(nx, ny, 20, 20);
+            deg++;
+            cen++;
+            g.FillRectangle(Brushes.Red, rect);
+            g.Dispose();
+      
 
         }
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -207,14 +206,12 @@ namespace Ussoft_Preactice_Calculator
         {
             double result = 0;
             int count = isAllNumber(textBox1.Text);
-            MessageBox.Show("count :"+ count);
 
             for (int i =0; i < count; i++)
             {
                 if (textBox1.Text.Contains("²"))
                 {
                     String a = returnPrev(textBox1.Text, "²");
-                    MessageBox.Show("true");
                     result = calculator(double.Parse(a), 0, 5);
                     textBox1.Text = textBox1.Text.Replace(a + "²", result.ToString());
                     continue;
@@ -242,9 +239,12 @@ namespace Ussoft_Preactice_Calculator
                 else if (textBox1.Text.Contains("-")){
                     String a = returnPrev(textBox1.Text, "-");
                     String b = returnBack(textBox1.Text, "-");
-                    result = calculator(double.Parse(a), double.Parse(b), 2);
-                    textBox1.Text = textBox1.Text.Replace(a + "-" + b, result.ToString());
-                    continue;
+                    if (!a.Equals(""))
+                    {
+                        result = calculator(double.Parse(a), double.Parse(b), 2);
+                        textBox1.Text = textBox1.Text.Replace(a + "-" + b, result.ToString());
+                        continue;
+                    }
                 }
             }
                        
@@ -266,7 +266,6 @@ namespace Ussoft_Preactice_Calculator
         
         private string returnPrev(String str, String chk)
         {
-            MessageBox.Show(str);
             string temp = str.Substring(0, str.IndexOf(chk));
             char[] c = temp.ToCharArray();
             string a = "";
@@ -297,7 +296,6 @@ namespace Ussoft_Preactice_Calculator
                 {
                     if ('0' <= c[i] && '9' >= c[i])
                     {
-                        MessageBox.Show(c[i].ToString());
                         a += c[i].ToString();
 
                     }
